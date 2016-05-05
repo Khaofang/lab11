@@ -15,8 +15,10 @@ import java.util.concurrent.atomic.*;  // hack, using AtomicInteger as accumulat
  */
 public class TaskTimer
 {
+	private static final double NANOSECONDS = 1.0E-9;
 	// Limit number of words read.  Otherwise, the next task could be very sloooow.
     static final int MAXCOUNT = 50_000;
+    
     
 	/**
      * Process all the words in a file using Scanner to read and parse input.
@@ -225,7 +227,7 @@ public class TaskTimer
      * Append all the words from the dictionary to a StringBuilder.
      * Compare how long this takes to appending to String.
      */
-    static class Task6 {
+    static class Task6 implements Runnable {
         private BufferedReader br;
         
         public Task6() {
@@ -278,22 +280,20 @@ public class TaskTimer
 
     public static void execAndPrint(Runnable task) {
     	out.println("Starting task: "+task.toString());
-    	long starttime, stoptime;
-    	starttime = System.nanoTime();
+    	StopWatch clock = new StopWatch();
+    	clock.start();
     	task.run();
-    	stoptime = System.nanoTime();
-    	out.printf("Elapsed time is %f sec\n",(stoptime - starttime)*1.0E-9 );
+    	clock.stop();
+    	out.printf("Elapsed time is %f sec\n",clock.getElapsed()*NANOSECONDS);
     }
-        
         
     /** Run all the tasks. */
     public static void main(String [] args) {
-        //task1();
     	execAndPrint(new Task1());
         execAndPrint(new Task2());
         execAndPrint(new Task3());
         execAndPrint(new Task4());
         execAndPrint(new Task5());
-        task6();
+        execAndPrint(new Task6());
     }
 }

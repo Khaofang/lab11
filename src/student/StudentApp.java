@@ -1,5 +1,9 @@
 package student;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * Display reminders of students having a birthday soon.
@@ -11,18 +15,23 @@ public class StudentApp {
 	 * Print the names (and birthdays) of students having a birtday in the
 	 * specified month.
 	 * @param students list of students
-	 * @param month the month to use in selecting bithdays
+	 * @param filter that test about equallity ot month
 	 */
-	public void filterAndPrint( List<Student> students, int month ) {
-		for(Student s : students ) {
-			if (s.getBirthdate().getMonthValue() == month)
-	                  System.out.println( s );
-		}
+	public void filterAndPrint(List<Student> students, Predicate<Student> filter, Consumer<Student> action, Comparator<Student> byBirthday) {
+		students.stream().filter(filter).sorted(byBirthday).forEach(action);
 	}
 	
 	public static void main(String[] args) {
 		List<Student> students = Registrar.getInstance().getStudents();
 		StudentApp app = new StudentApp();
-		app.filterAndPrint(students, 5 /* may */);
+		Predicate<Student> checkBirthMonth = (s) -> (s.getBirthdate().getMonthValue() == LocalDate.now().getMonthValue());
+		Predicate<Student> checkBirthdayIn2Week = (s) -> (s.getBirthdate().getDayOfYear()-LocalDate.now().getDayOfYear() <= 14 && s.getBirthdate().getDayOfYear()-LocalDate.now().getDayOfYear() >= 0);
+		Consumer<Student> studentConsumer = (s) -> System.out.println(s.toString()+" will have birthday on "+
+														s.getBirthdate().getDayOfMonth()+" "+
+														s.getBirthdate().getMonth().toString());
+		Comparator<Student> byName = (a, b) -> (a.toString().compareTo(b.toString()));
+		Comparator<Student> byBirthday = (a, b) -> (a.getBirthdate().getDayOfYear()-(b.getBirthdate().getDayOfYear()));
+		
+		app.filterAndPrint(students, checkBirthMonth, studentConsumer, byBirthday);
 	}
 }
