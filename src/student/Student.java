@@ -70,8 +70,7 @@ public class Student {
 	 */
 	private void setBirthdate(String datestr) {
 		try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			birthdate = LocalDate.parse(datestr, formatter);
+			birthdate = LocalDate.parse(datestr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch(DateTimeParseException e) {
 			System.out.println("Can't parse String of birthdate to LocalDate. It format is invalid from dd/MM/yyyy!");
 		}
