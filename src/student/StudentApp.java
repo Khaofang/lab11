@@ -7,20 +7,24 @@ import java.util.function.Predicate;
 
 /**
  * Display reminders of students having a birthday soon.
- * @author you
+ * @author Chayanin Punjakunaporn
  */
 public class StudentApp {
 
 	/**
-	 * Print the names (and birthdays) of students having a birtday in the
+	 * Print the names (and birthdays) of students having a birthday in the
 	 * specified month.
 	 * @param students list of students
-	 * @param filter that test about equallity ot month
+	 * @param filter that test that who of student has birthday in the month of today
 	 */
 	public void filterAndPrint(List<Student> students, Predicate<Student> filter, Consumer<Student> action, Comparator<Student> byBirthday) {
 		students.stream().filter(filter).sorted(byBirthday).forEach(action);
 	}
 	
+	/**
+	 * Run this class.
+	 * Calling filterAndPrint is example, so predicate, consumer, and comparator that be used all are ready.
+	 */
 	public static void main(String[] args) {
 		List<Student> students = Registrar.getInstance().getStudents();
 		StudentApp app = new StudentApp();

@@ -10,8 +10,7 @@ import java.util.concurrent.atomic.*;  // hack, using AtomicInteger as accumulat
 /**
  * Time how long it takes to perform some tasks
  * using different programming constructs.
- * 
- * TODO Improve this code by restructuring it to eliminate duplicate code.
+ * @author Chayanin Punjakunaporn (Restructure the code to eliminate duplication)
  */
 public class TaskTimer
 {
@@ -25,6 +24,7 @@ public class TaskTimer
      * Display summary statistics and elapsed time.
      */
 	static class Task1 implements Runnable {		
+		
 		private Scanner in;
 		
 		public Task1() {
