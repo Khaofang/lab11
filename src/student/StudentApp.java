@@ -14,14 +14,10 @@ import java.util.function.Predicate;
 public class StudentApp {
 
 	/**
-	 * Print the names (and birthdays) of students having a birthday in the
-	 * specified month.
+	 * Print the names (and birthdays) of students having a birthday in the specified month.
 	 * 
-	 * @param students
-	 *            list of students
-	 * @param filter
-	 *            that test that who of student has birthday in the month of
-	 *            today
+	 * @param students list of students
+	 * @param filter that test that who of student has birthday in the month of today
 	 */
 	public void filterAndPrint(List<Student> students, Predicate<Student> filter, Consumer<Student> action, Comparator<Student> byBirthday) {
 		students.stream().filter(filter).sorted(byBirthday).forEach(action);
